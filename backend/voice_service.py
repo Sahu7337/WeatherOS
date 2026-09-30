@@ -17,8 +17,11 @@ VOICE_MAP = {
 }
 
 class VoiceService:
-    def __init__(self, audio_dir: str = "backend/audio_cache"):
-        self.audio_dir = audio_dir
+    def __init__(self, audio_dir: Optional[str] = None):
+        if audio_dir is None:
+            self.audio_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "audio_cache")
+        else:
+            self.audio_dir = audio_dir
         os.makedirs(self.audio_dir, exist_ok=True)
 
     def _get_filename(self, text: str, voice: str) -> str:
