@@ -1,4 +1,4 @@
-# 🌤️ WeatherOS (MausamAI / मौसम एआई)
+# 🌤️ WeatherOS
 ### Intelligent Conversational AI Platform for Weather Forecasting, Early Warnings, and Climate Decision Support
 
 > **Problem Statement 1 Solution**: Conversational AI for Weather Forecasting, Alerts, and Climate Information.
@@ -82,10 +82,10 @@ http://localhost:8000/docs
 
 | Intent | Sample Voice/Text Query | WeatherOS Intelligence Output |
 | :--- | :--- | :--- |
-| **Pesticide Spraying** | *"Can I spray pesticide on my wheat crop today in Karnal?"* / *"क्या मैं आज अपनी गेहूं की फसल पर कीटनाशक छिड़क सकता हूँ?"* | Checks wind speed (&lt;15 km/h) and rain probability (&lt;20%). Returns approved/unfavorable decision badge with scientific explanation. |
+| **Pesticide Spraying** | *"Can I spray pesticide on my wheat crop today in Karnal?"* / *"ଆଜି ମୋ ଫସଲରେ କୀଟନାଶକ ପ୍ରୟୋଗ କରିପାରିବି କି?"* | Checks wind speed (&lt;15 km/h) and rain probability (&lt;20%). Returns approved/unfavorable decision badge with scientific explanation. |
 | **Marine & Fishermen** | *"Are sea conditions safe for fishermen off Vizag coast?"* / *"என்னால் இன்று கடலுக்குச் செல்ல முடியுமா?"* | Computes wave height, swell period, wind knots, Douglas sea state, and outputs IMD port cautionary signal. |
-| **Extreme Weather Alerts** | *"Show active alerts in Odisha"* / *"क्या कोई चक्रवात या हीटवेव चेतावनी है?"* | Returns IMD color-coded Red/Orange alert, impact assessment, civil defense action items, and emergency contacts (NDRF 1078). |
-| **Climate Trends** | *"Show 40-year climate warming trends in Delhi"* / *"पिछले 40 वर्षों में जलवायु में क्या बदलाव आया है?"* | Fetches 1980–2025 ERA5 reanalysis, shows +1.26°C warming rate, decadal heatwave frequency chart, and climate adaptation guidelines. |
+| **Extreme Weather Alerts** | *"Show active alerts in Odisha"* / *"Cyclone or heatwave warning updates"* | Returns IMD color-coded Red/Orange alert, impact assessment, civil defense action items, and emergency contacts (NDRF 1078). |
+| **Climate Trends** | *"Show 40-year climate warming trends in Delhi"* | Fetches 1980–2025 ERA5 reanalysis, shows +1.26°C warming rate, decadal heatwave frequency chart, and climate adaptation guidelines. |
 | **Irrigation Planning** | *"Should I irrigate my fields in Patna today?"* | Evaluates next 24-48h rainfall forecast against soil moisture needs to prevent waterlogging or water wastage. |
 
 ---
@@ -95,7 +95,7 @@ http://localhost:8000/docs
 ```
 WeatherOS/
 ├── backend/
-│   ├── config.py                 # Application settings & 11 Indian language voice mappings
+│   ├── config.py                 # Application settings & regional language voice mappings
 │   ├── main.py                   # FastAPI application, static mounts & REST endpoints
 │   ├── weather_service.py        # Real-time weather, hourly, 10-day forecast, AQI & Marine APIs
 │   ├── alerts_engine.py          # IMD color-coded warnings (Red/Orange/Yellow/Green)
