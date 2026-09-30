@@ -85,6 +85,70 @@ function WeatherIcon({ name, className = "w-6 h-6" }) {
   }
 }
 
+// Dynamic Live Weather Favicon Generator
+function updateLiveWeatherFavicon(iconName, isDay) {
+  const link = document.getElementById("dynamic-favicon");
+  if (!link) return;
+
+  const styleTag = `<style>.stroke-c{stroke:#111;}.fill-c{fill:#111;}@media(prefers-color-scheme:dark){.stroke-c{stroke:#fff;}.fill-c{fill:#fff;}}</style>`;
+  let innerSvg = "";
+
+  if (isDay === false && (iconName === "Sun" || iconName === "SunDim" || !iconName)) {
+    innerSvg = `<path d="M38 16a18 18 0 1 0 10 32 16 16 0 0 1-10-32z" class="fill-c" />`;
+  } else {
+    switch (iconName) {
+      case "Sun":
+        innerSvg = `
+          <circle cx="32" cy="32" r="11" class="fill-c" />
+          <path d="M32 6v6m0 40v6M6 32h6m40 0h6m-36.8-18.4l4.2 4.2m25.2 25.2l4.2 4.2m-33.6 0l4.2-4.2m25.2-25.2l4.2-4.2" class="stroke-c" stroke-width="3.5" stroke-linecap="round" fill="none" />
+        `;
+        break;
+      case "SunDim":
+      case "CloudSun":
+        innerSvg = `
+          <circle cx="26" cy="24" r="8" class="stroke-c" stroke-width="3" fill="none" />
+          <path d="M26 10v4M12 24h4m19.9-9.9l-2.8 2.8" class="stroke-c" stroke-width="3" stroke-linecap="round" fill="none" />
+          <path d="M19 46h24a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 19 46z" class="fill-c stroke-c" stroke-width="2" />
+        `;
+        break;
+      case "CloudRain":
+      case "CloudRainWind":
+      case "CloudDrizzle":
+        innerSvg = `
+          <path d="M19 38h24a9 9 0 0 0 1-17.9 13 13 0 0 0-25 4.9A9 9 0 0 0 19 38z" class="fill-c" />
+          <path d="M22 45l-3 7m11-7l-3 7m11-7l-3 7" class="stroke-c" stroke-width="3.5" stroke-linecap="round" fill="none" />
+        `;
+        break;
+      case "CloudLightning":
+        innerSvg = `
+          <path d="M18 36h26a9 9 0 0 0 1-17.9 13 13 0 0 0-26 4.9A9 9 0 0 0 18 36z" class="stroke-c" stroke-width="3" fill="none" />
+          <path d="M34 33l-7 11h7l-3 10 11-13h-7l4-8z" class="fill-c" />
+        `;
+        break;
+      case "Snowflake":
+        innerSvg = `
+          <path d="M32 10v44M11 21l42 22M11 43l42-22m-27-27l6 6m0 0l6-6m-12 44l6-6m0 0l6 6" class="stroke-c" stroke-width="3.5" stroke-linecap="round" fill="none" />
+        `;
+        break;
+      case "CloudFog":
+        innerSvg = `
+          <path d="M19 34h24a9 9 0 0 0 1-17.9 13 13 0 0 0-25 4.9A9 9 0 0 0 19 34z" class="stroke-c" stroke-width="3" fill="none" />
+          <path d="M14 42h36M18 48h28M22 54h20" class="stroke-c" stroke-width="3" stroke-linecap="round" fill="none" />
+        `;
+        break;
+      case "Cloud":
+      default:
+        innerSvg = `
+          <path d="M19 44h26a11 11 0 0 0 1-21.9 15 15 0 0 0-28 5.9A11 11 0 0 0 19 44z" class="fill-c stroke-c" stroke-width="2.5" />
+        `;
+        break;
+    }
+  }
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">${styleTag}${innerSvg}</svg>`;
+  link.href = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
 function App() {
   const [theme, setTheme] = useState(() => {
     return document.documentElement.getAttribute("data-theme") ||
@@ -227,6 +291,13 @@ function App() {
   useEffect(() => {
     fetchWeatherData(selectedCity.lat, selectedCity.lon, selectedCity.name);
   }, [selectedCity]);
+
+  // Update dynamic live SVG favicon whenever weather condition updates
+  useEffect(() => {
+    if (weatherData && weatherData.current) {
+      updateLiveWeatherFavicon(weatherData.current.icon, weatherData.current.is_day);
+    }
+  }, [weatherData]);
 
   // Load national bulletin once
   useEffect(() => {
