@@ -67,6 +67,16 @@ def favicon():
 def health_check():
     return {"status": "healthy"}
 
+@app.get("/api/config")
+def get_config():
+    return {
+        "carto_api_key": settings.CARTO_API_KEY,
+        "default_lat": settings.DEFAULT_LAT,
+        "default_lon": settings.DEFAULT_LON,
+        "default_city": settings.DEFAULT_CITY,
+        "default_state": settings.DEFAULT_STATE
+    }
+
 @app.get("/api/languages")
 def get_languages():
     return settings.SUPPORTED_LANGUAGES
