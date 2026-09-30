@@ -3,16 +3,15 @@ const { useState, useEffect, useRef } = React;
 // Supported Languages Metadata
 const LANGUAGES = {
   en: { name: "English", native: "English" },
-  hi: { name: "Hindi", native: "हिंदी" },
+  or: { name: "Odia", native: "ଓଡ଼ିଆ" },
+  bn: { name: "Bengali", native: "বাংলা" },
   ta: { name: "Tamil", native: "தமிழ்" },
   te: { name: "Telugu", native: "తెలుగు" },
-  bn: { name: "Bengali", native: "বাংলা" },
   mr: { name: "Marathi", native: "मराठी" },
   gu: { name: "Gujarati", native: "ગુજરાતી" },
   kn: { name: "Kannada", native: "ಕನ್ನಡ" },
-  or: { name: "Odia", native: "ଓଡ଼ିଆ" },
-  pa: { name: "Punjabi", native: "ਪੰਜਾਬੀ" },
-  ml: { name: "Malayalam", native: "മലയാളം" }
+  ml: { name: "Malayalam", native: "മലയാളം" },
+  pa: { name: "Punjabi", native: "ਪੰਜਾਬੀ" }
 };
 
 // Preset Stations
@@ -246,8 +245,8 @@ function App() {
       recognition.interimResults = false;
       
       const langCodes = {
-        en: "en-IN", hi: "hi-IN", ta: "ta-IN", te: "te-IN", bn: "bn-IN",
-        mr: "mr-IN", gu: "gu-IN", kn: "kn-IN", ml: "ml-IN", pa: "pa-IN", or: "or-IN"
+        en: "en-IN", or: "or-IN", ta: "ta-IN", te: "te-IN", bn: "bn-IN",
+        mr: "mr-IN", gu: "gu-IN", kn: "kn-IN", ml: "ml-IN", pa: "pa-IN"
       };
       recognition.lang = langCodes[language] || "en-IN";
 
