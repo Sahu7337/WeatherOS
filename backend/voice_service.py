@@ -5,7 +5,7 @@ from typing import Optional
 
 VOICE_MAP = {
     "en": "en-IN-NeerjaNeural",
-    "hi": "hi-IN-SwaraNeural",
+    "or": "en-IN-NeerjaNeural",
     "ta": "ta-IN-PallaviNeural",
     "te": "te-IN-MohanNeural",
     "bn": "bn-IN-TanishaaNeural",
@@ -13,8 +13,7 @@ VOICE_MAP = {
     "gu": "gu-IN-DhwaniNeural",
     "kn": "kn-IN-SapnaNeural",
     "ml": "ml-IN-SobhanaNeural",
-    "or": "hi-IN-SwaraNeural",
-    "pa": "hi-IN-SwaraNeural"
+    "pa": "en-IN-NeerjaNeural"
 }
 
 class VoiceService:
