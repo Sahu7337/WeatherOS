@@ -61,35 +61,35 @@ class ConversationalAgent:
         q = query.lower()
         
         # Spraying / Agriculture Pesticide
-        if any(w in q for w in ["spray", "pesticide", "fertilizer", "chemicals", "छिड़काव", "कीटनाशक", "மருந்து தெளிக்க", "మందు పిచికారీ", "কীটনাশক"]):
+        if any(w in q for w in ["spray", "pesticide", "fertilizer", "chemicals", "மருந்து தெளிக்க", "మందు పిచికారీ", "কীটনাশক"]):
             return "AGRI_SPRAYING"
         
         # Irrigation / Crop water
-        if any(w in q for w in ["irrigate", "irrigation", "water the crop", "field water", "सिंचाई", "पानी देना", "பாசனம்", "నీరు పెట్టవచ్చా", "সেচ"]):
+        if any(w in q for w in ["irrigate", "irrigation", "water the crop", "field water", "பாசனம்", "నీరు పెట్టవచ్చా", "সেচ"]):
             return "AGRI_IRRIGATION"
         
         # Marine / Fishermen safety
-        if any(w in q for w in ["sea", "fishermen", "fishing", "boat", "waves", "trawler", "मछुआरे", "समुद्र", "नाव", "கடல்", "மீன்பிடிக்க", "సముద్రం", "చేపల వేట", "সমুদ্র"]):
+        if any(w in q for w in ["sea", "fishermen", "fishing", "boat", "waves", "trawler", "கடல்", "மீன்பிடிக்க", "సముద్రం", "చేపల వేట", "সমুদ্র"]):
             return "MARINE_SAFETY"
 
         # Alerts / Warnings / Cyclone / Heatwave / Storm
-        if any(w in q for w in ["alert", "warning", "cyclone", "heatwave", "danger", "flood", "चेतावनी", "अलर्ट", "चक्रवात", "लू", "तूफान", "எச்சரிக்கை", "புயல்", "హెచ్చరిక", "తుఫాను"]):
+        if any(w in q for w in ["alert", "warning", "cyclone", "heatwave", "danger", "flood", "எச்சரிக்கை", "புயல்", "హెచ్చరిక", "తుఫాను"]):
             return "ALERTS_WARNINGS"
 
         # Climate trend / Historical change / Global warming
-        if any(w in q for w in ["climate", "trend", "historical", "warming", "decade", "30 years", "40 years", "जलवायु", "रुझान", "तापमान में बदलाव", "காலநிலை", "వాతావరణ మార్పు"]):
+        if any(w in q for w in ["climate", "trend", "historical", "warming", "decade", "30 years", "40 years", "காலநிலை", "వాతావరణ మార్పు"]):
             return "CLIMATE_TRENDS"
 
         # Aviation / Drone
-        if any(w in q for w in ["drone", "fly", "aviation", "flight", "pilot", "विमान", "ड्रोन"]):
+        if any(w in q for w in ["drone", "fly", "aviation", "flight", "pilot"]):
             return "AVIATION"
 
         # Air Quality / Pollution
-        if any(w in q for w in ["aqi", "air quality", "pollution", "pm2.5", "smog", "प्रदूषण", "हवा की गुणवत्ता"]):
+        if any(w in q for w in ["aqi", "air quality", "pollution", "pm2.5", "smog"]):
             return "AIR_QUALITY"
 
         # Forecast
-        if any(w in q for w in ["tomorrow", "forecast", "weekend", "rain today", "will it rain", "next week", "forecast", "कल", "बारिश", "होगी क्या"]):
+        if any(w in q for w in ["tomorrow", "forecast", "weekend", "rain today", "will it rain", "next week"]):
             return "FORECAST"
 
         # Default Current Weather
@@ -117,10 +117,7 @@ class ConversationalAgent:
             card_type = "AGRI_SPRAYING"
             card_data = agri
             
-            if lang == "hi":
-                status_hi = "सुरक्षित है" if spray["is_safe"] else "अनुशंसित नहीं है"
-                response_text = f"{location_name} के लिए कृषि सलाह: आज कीटनाशक का छिड़काव {status_hi}। {spray['reason']} हवा की गति: {current.get('wind_speed')} किमी/घंटा, तापमान: {current.get('temperature')}°C।"
-            elif lang == "ta":
+            if lang == "ta":
                 status_ta = "பாதுகாப்பானது" if spray["is_safe"] else "பரிந்துரைக்கப்படவில்லை"
                 response_text = f"{location_name} விவசாய ஆலோசனை: இன்று மருந்து தெளிப்பது {status_ta}. {spray['reason']} காற்றின் வேகம்: {current.get('wind_speed')} கி.மீ/மணி."
             elif lang == "te":
@@ -136,9 +133,7 @@ class ConversationalAgent:
             card_type = "AGRI_IRRIGATION"
             card_data = agri
             
-            if lang == "hi":
-                response_text = f"{location_name} में सिंचाई सलाह: {irrig['recommendation']} आर्द्रता: {current.get('humidity')}%, वर्षा संभावना: {daily[0].get('precipitation_prob_max', 0)}%।"
-            elif lang == "ta":
+            if lang == "ta":
                 response_text = f"{location_name} பாசன ஆலோசனை: {irrig['recommendation']} ஈரப்பதம்: {current.get('humidity')}%."
             elif lang == "te":
                 response_text = f"{location_name} నీటిపారుదల సలహా: {irrig['recommendation']} తేమ: {current.get('humidity')}%."
@@ -154,9 +149,7 @@ class ConversationalAgent:
             if not marine_eval.get("is_applicable"):
                 response_text = f"{location_name} is an inland area. Coastal marine advisories apply along coastal zones (e.g. Visakhapatnam, Chennai, Mumbai, Kochi, Puri)."
             else:
-                if lang == "hi":
-                    response_text = f"{location_name} तटीय एवं मत्स्य चेतावनी: वर्तमान स्थिति '{marine_eval['status']}'। {marine_eval['advisory']} लहरों की ऊंचाई: {marine_eval.get('wave_height_meters')} मीटर, हवा: {marine_eval.get('wind_speed_knots')} नॉट। आपातकालीन चैनल: VHF 16।"
-                elif lang == "ta":
+                if lang == "ta":
                     response_text = f"{location_name} கடல்சார் எச்சரிக்கை: நிலைமை '{marine_eval['status']}'. {marine_eval['advisory']} அலை உயரம்: {marine_eval.get('wave_height_meters')} மீ, காற்றின் வேகம்: {marine_eval.get('wind_speed_knots')} knots."
                 elif lang == "te":
                     response_text = f"{location_name} సముద్ర హెచ్చరిక: స్థితి '{marine_eval['status']}'. {marine_eval['advisory']} అలల ఎత్తు: {marine_eval.get('wave_height_meters')} మీటర్లు."
@@ -168,9 +161,7 @@ class ConversationalAgent:
             card_data = {"alerts": alerts, "disaster_preparedness": decision_engine.evaluate_disaster_management(current, alerts)}
             
             top_alert = alerts[0]
-            if lang == "hi":
-                response_text = f"{location_name} के लिए IMD चेतावनी ({top_alert['severity']} श्रेणी): {top_alert['headline']}। संभावित प्रभाव: {top_alert['impact']}। अनुशंसित कार्रवाई: {top_alert['action']}। आपदा हेल्पलाइन: 1078।"
-            elif lang == "ta":
+            if lang == "ta":
                 response_text = f"{location_name} எச்சரிக்கை ({top_alert['severity']}): {top_alert['headline']}. நடவடிக்கை: {top_alert['action']}. பேரிடர் உதவி எண்: 1078."
             elif lang == "te":
                 response_text = f"{location_name} హెచ్చరిక ({top_alert['severity']}): {top_alert['headline']}. కార్యాచరణ: {top_alert['action']}. విపత్తు హెల్ప్‌లైన్: 1078."
@@ -182,9 +173,7 @@ class ConversationalAgent:
             card_type = "CLIMATE_TRENDS"
             card_data = trends
             
-            if lang == "hi":
-                response_text = f"{location_name} का 45-वर्षीय जलवायु विश्लेषण (1980 - 2025): कुल औसत तापमान में {trends['net_warming']} की वृद्धि हुई है ({trends['warming_rate_per_decade']})। अत्यधिक गर्मी के दिनों में उल्लेखनीय वृद्धि हुई है। {trends['climate_resilience_advisory']}"
-            elif lang == "ta":
+            if lang == "ta":
                 response_text = f"{location_name} காலநிலை பகுப்பாய்வு (1980 - 2025): சராசரி வெப்பநிலை {trends['net_warming']} அதிகரித்துள்ளது. {trends['climate_resilience_advisory']}"
             elif lang == "te":
                 response_text = f"{location_name} వాతావరణ ధోరణి (1980 - 2025): ఉష్ణోగ్రత {trends['net_warming']} పెరిగింది. {trends['climate_resilience_advisory']}"
@@ -196,9 +185,7 @@ class ConversationalAgent:
             card_type = "AIR_QUALITY"
             card_data = aqi_data
             
-            if lang == "hi":
-                response_text = f"{location_name} में वायु गुणवत्ता सूचकांक (AQI) {aqi_data['aqi']} है, जो '{aqi_data['category']}' श्रेणी में आता है। {aqi_data['advice']} PM2.5: {aqi_data.get('pm2_5', 'N/A')} µg/m³।"
-            elif lang == "ta":
+            if lang == "ta":
                 response_text = f"{location_name} காற்றின் தரம் (AQI) {aqi_data['aqi']} ({aqi_data['category']}). {aqi_data['advice']}"
             elif lang == "te":
                 response_text = f"{location_name} గాలి నాణ్యత సూచిక (AQI) {aqi_data['aqi']} ({aqi_data['category']}). {aqi_data['advice']}"
@@ -221,9 +208,7 @@ class ConversationalAgent:
             t_rain = tomorrow.get("precipitation_prob_max", 0)
             t_cond = tomorrow.get("condition", "Partly Cloudy")
             
-            if lang == "hi":
-                response_text = f"{location_name} के लिए पूर्वानुमान: कल का मौसम '{t_cond}' रहेगा। अधिकतम तापमान {t_max}°C और न्यूनतम तापमान {t_min}°C रहने का अनुमान है। बारिश की संभावना {t_rain}% है।"
-            elif lang == "ta":
+            if lang == "ta":
                 response_text = f"{location_name} வானிலை முன்னறிவிப்பு: நாளை நிலைமை '{t_cond}'. அதிகபட்ச வெப்பநிலை {t_max}°C, குறைந்தபட்சம் {t_min}°C. மழை வாய்ப்பு {t_rain}%."
             elif lang == "te":
                 response_text = f"{location_name} వాతావరణ సూచన: రేపటి పరిస్థితి '{t_cond}'. గరిష్ట ఉష్ణోగ్రత {t_max}°C, కనిష్ట ఉష్ణోగ్రత {t_min}°C. వర్ష సూచన {t_rain}%."
@@ -239,9 +224,7 @@ class ConversationalAgent:
             hum = current.get("humidity", 50)
             wind = current.get("wind_speed", 10)
             
-            if lang == "hi":
-                response_text = f"{location_name} में वर्तमान मौसम: {temp}°C (महसूस {feels}°C), स्थिति: {cond}। आर्द्रता {hum}% है और हवा {wind} किमी/घंटा की गति से चल रही है।"
-            elif lang == "ta":
+            if lang == "ta":
                 response_text = f"{location_name} தற்போதைய வானிலை: {temp}°C (உணர்தல் {feels}°C), {cond}. ஈரப்பதம் {hum}%, காற்றின் வேகம் {wind} கி.மீ/மணி."
             elif lang == "te":
                 response_text = f"{location_name} ప్రస్తుత వాతావరణం: {temp}°C (అనిపించేది {feels}°C), {cond}. తేమ {hum}%, గాలి వేగం {wind} km/h."
