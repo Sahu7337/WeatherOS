@@ -111,14 +111,16 @@ async def get_live_alerts(
 def get_national_bulletin():
     return {"national_bulletin": alerts_engine.get_national_alert_bulletin()}
 
+@app.get("/api/climate/historical")
 @app.get("/api/climate/trends")
 async def get_climate_trends(
     lat: float = Query(28.6139),
     lon: float = Query(77.2090),
-    location: str = Query("New Delhi")
+    location: str = Query("")
 ):
     return await climate_service.get_historical_climate_trends(lat, lon, location)
 
+@app.get("/api/decision/agromet")
 @app.get("/api/decision/agriculture")
 async def get_agriculture_decision(
     lat: float = Query(28.6139),
@@ -164,12 +166,36 @@ async def process_chat(req: ChatRequest):
     )
     return result
 
+@app.post("/api/voice/tts")
 @app.post("/api/tts")
 async def synthesize_speech(req: TTSRequest):
-    audio_path = await voice_service.generate_speech(req.text, req.language)
-    if not audio_path or not os.path.exists(audio_path):
-        raise HTTPException(status_code=500, detail="TTS synthesis failed")
-    return FileResponse(audio_path, media_type="audio/mpeg", filename="speech.mp3")
+    try:
+        audio_path = await voice_service.generate_speech(req.text, req.language)
+        if audio_path and os.path.exists(audio_path):
+            import base64
+            with open(audio_path, "rb") as f:
+                b64 = base64.b64encode(f.read()).decode("utf-8")
+            return {
+                "status": "success",
+                "audio_base64": b64,
+                "format": "mp3",
+                "filename": os.path.basename(audio_path)
+            }
+    except Exception as e:
+        print(f"TTS synthesis error: {e}")
+    return {
+        "status": "fallback",
+        "audio_base64": None,
+        "message": "TTS offline or unconfigured. Browser fallback supported."
+    }
+
+@app.get("/api/voice/audio/{filename}")
+def get_audio_file(filename: str):
+    cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "audio_cache")
+    path = os.path.join(cache_dir, filename)
+    if os.path.exists(path):
+        return FileResponse(path, media_type="audio/mpeg", filename=filename)
+    raise HTTPException(status_code=404, detail="Audio file not found")
 
 if __name__ == "__main__":
     import uvicorn
