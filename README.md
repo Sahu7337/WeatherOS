@@ -11,7 +11,7 @@
 
 | Capability | Implementation in WeatherOS | Impact & Beneficiary |
 | :--- | :--- | :--- |
-| **🎙️ Multilingual Conversational AI & Voice** | Natural language NLU intent classification supporting **11 Indian languages** (Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Odia, Punjabi, Malayalam, and English) with neural voice synthesis (`edge-tts`). | Rural accessibility for farmers & fishermen without literacy or language barriers. |
+| **🎙️ Multilingual Conversational AI & Voice** | Natural language NLU intent classification supporting **10 regional & national languages** (Odia, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Punjabi, Malayalam, and English) with neural voice synthesis (`edge-tts`). | Rural accessibility for farmers & fishermen without literacy or language barriers. |
 | **🚨 IMD Extreme-Weather Early Warnings** | Real-time 4-stage color-coded alerts (**Red, Orange, Yellow, Green**) for Heatwaves, Flash Floods, Heavy Rain, Severe Thunderstorms, and Squally Winds with regional subdivision feeds. | Preemptive disaster preparedness, reduced casualty rates, and automated civil defense checklists. |
 | **🌾 Kisan Agromet Decision Support** | Micro-climate rules for **Pesticide Spray Feasibility** (wind drift & rain washout thresholds), **Irrigation Planning** (precipitation forecast vs soil moisture), and **Fungal Blight Risk**. | Farmers prevent pesticide wastage, optimize canal/borewell irrigation, and protect standing crops. |
 | **⚓ Matsya Mitra (Marine Safety)** | Douglas sea scale computation, significant wave height, swell period, wind speed in knots, and IMD port warning signals (LC-III, GD-VIII). | Fishermen safety at sea, prevention of capsizing incidents, and coast guard emergency integration (VHF 16). |
