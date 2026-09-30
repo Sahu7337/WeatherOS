@@ -636,16 +636,16 @@ function App() {
       
       {/* 1. MINIMALIST EDITORIAL HEADER (Strictly on #fafafa ground) */}
       <header className="px-4 sm:px-8 py-5">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-baseline justify-between gap-4">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
           
           {/* Logo & Operational Status */}
-          <div className="flex items-baseline space-x-3 cursor-pointer" onClick={() => setActiveTab("overview")}>
+          <div className="flex items-baseline space-x-3 cursor-pointer shrink-0" onClick={() => setActiveTab("overview")}>
             <span className="font-semibold text-xl tracking-tight hover-lift">WeatherOS</span>
             <span className="text-xs text-neutral-400 font-normal">Meteorological Intelligence</span>
           </div>
 
-          {/* Search Line & Controls */}
-          <div className="flex items-center space-x-4 w-full md:w-auto justify-between md:justify-end">
+          {/* Search Line & Controls (Left-aligned) */}
+          <div className="flex flex-wrap items-center gap-3">
             
             {/* Minimalist Search */}
             <div className="relative flex items-center bg-neutral-100 dark:bg-neutral-800/60 px-2.5 py-1 rounded w-48 sm:w-64">
@@ -738,9 +738,9 @@ function App() {
         </div>
       </header>
 
-      {/* 2. TELEMETRY STATUS LINE */}
+      {/* 2. TELEMETRY STATUS LINE (Left-aligned) */}
       <section className="px-4 sm:px-8 py-2 text-xs">
-        <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-2 text-neutral-500">
+        <div className="max-w-5xl mx-auto flex flex-wrap items-center gap-4 text-neutral-500">
           <div className="flex items-center space-x-2">
             <span className="section-label">STATION:</span>
             <span className="text-current font-medium">{selectedCity.name}</span>
@@ -748,7 +748,8 @@ function App() {
               [{selectedCity.lat.toFixed(3)}°N, {selectedCity.lon.toFixed(3)}°E]
             </span>
           </div>
-          <div className="flex items-center space-x-4 text-[11px] font-mono-num text-neutral-400">
+          <div className="flex items-center space-x-2 text-[11px] font-mono-num text-neutral-400">
+            <span>·</span>
             <span>ECMWF / GFS</span>
             <span className="text-current">SYNCHRONIZED</span>
           </div>
@@ -782,18 +783,15 @@ function App() {
         {activeTab === "overview" && weatherData && (
           <div className="space-y-12">
             
-            {/* HERO WEATHER DISPLAY (Like Pomodoro Timer Clock on #fafafa) */}
-            <div>
-              <div className="flex items-baseline justify-between">
-                <div>
-                  <h1 className="text-2xl font-semibold tracking-tight">{selectedCity.name}</h1>
-                  <p className="text-xs text-neutral-400 font-mono-num mt-0.5">
-                    {weatherData.current?.time || "Observed"} · {weatherData.current?.condition}
-                  </p>
-                </div>
-                <div className="text-xs font-mono-num text-neutral-400">
-                  APPARENT {weatherData.current?.apparent_temperature}°C
-                </div>
+            {/* HERO WEATHER DISPLAY (Like Pomodoro Timer Clock on #fafafa, Strictly Left-Aligned) */}
+            <div className="space-y-1 text-left">
+              <h1 className="text-2xl font-semibold tracking-tight">{selectedCity.name}</h1>
+              <div className="flex flex-wrap items-center gap-3 text-xs text-neutral-400 font-mono-num">
+                <span>{weatherData.current?.time || "Observed"}</span>
+                <span>·</span>
+                <span className="text-neutral-700 dark:text-neutral-300 font-sans">{weatherData.current?.condition}</span>
+                <span>·</span>
+                <span>APPARENT {weatherData.current?.apparent_temperature}°C</span>
               </div>
 
               {/* Massive Minimalist Temperature Numeral */}
@@ -806,8 +804,8 @@ function App() {
                 </div>
               </div>
 
-              {/* Clean Telemetry Metrics Row (Flat, Borderless) */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-3 text-xs font-mono-num">
+              {/* Clean Telemetry Metrics Row (Flat, Borderless, Left-Aligned) */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-3 text-xs font-mono-num text-left">
                 <div className="hover-lift">
                   <div className="section-label">Humidity</div>
                   <div className="text-lg font-light text-current mt-0.5">{weatherData.current?.humidity}%</div>
@@ -828,14 +826,14 @@ function App() {
 
             </div>
 
-            {/* 24-HOUR HOURLY TIMELINE (Flat, No Boxed Cards, Borderless) */}
-            <div>
+            {/* 24-HOUR HOURLY TIMELINE (Flat, Left-Aligned) */}
+            <div className="text-left">
               <div className="section-label mb-3">Hourly Forecast (24h)</div>
               <div className="flex space-x-6 overflow-x-auto pb-2">
                 {weatherData.hourly?.slice(0, 14).map((hr, idx) => (
-                  <div key={idx} className="hourly-col shrink-0 text-center min-w-[56px] space-y-1.5">
+                  <div key={idx} className="hourly-col shrink-0 text-left min-w-[56px] space-y-1.5">
                     <div className="text-[11px] text-neutral-400 font-mono-num">{hr.time?.split("T")[1]}</div>
-                    <div className="flex justify-center text-current py-0.5">
+                    <div className="flex justify-start text-current py-0.5">
                       <WeatherIcon name={hr.weather_code === 0 ? "Sun" : hr.precipitation > 0 ? "CloudRain" : "Cloud"} className="w-4 h-4" />
                     </div>
                     <div className="hourly-temp text-sm font-mono-num font-normal text-current transition">{hr.temperature}°</div>
@@ -845,11 +843,11 @@ function App() {
               </div>
             </div>
 
-            {/* AIR QUALITY (AQI) SECTION (Flat Editorial Layout, Borderless) */}
+            {/* AIR QUALITY (AQI) SECTION (Flat Editorial Layout, Borderless, Left-Aligned) */}
             {airQuality && (
-              <div className="pt-2">
+              <div className="pt-2 text-left">
                 <div className="section-label mb-3">Air Quality Telemetry</div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-baseline py-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-baseline py-3 text-left">
                   <div className="hover-lift">
                     <div className="text-6xl font-extralight font-mono-num text-current leading-none">
                       {airQuality.aqi}
@@ -865,7 +863,7 @@ function App() {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 text-xs font-mono-num">
+                  <div className="grid grid-cols-2 gap-4 text-xs font-mono-num text-left">
                     <div className="hover-lift">
                       <div className="text-[10px] text-neutral-400 uppercase">PM2.5</div>
                       <div className="font-light text-current">{airQuality.pm2_5 || 'N/A'} µg/m³</div>
@@ -887,16 +885,16 @@ function App() {
               </div>
             )}
 
-            {/* 10-DAY SYNOPTIC OUTLOOK (Flat Table / Row Layout, Borderless) */}
-            <div>
+            {/* 10-DAY SYNOPTIC OUTLOOK (Flat Table / Row Layout, Left-Aligned) */}
+            <div className="text-left">
               <div className="section-label mb-3">10-Day Synoptic Meteorological Outlook</div>
-              <div className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-10 gap-4 py-3">
+              <div className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-10 gap-4 py-3 text-left">
                 {weatherData.daily?.map((day, idx) => (
-                  <div key={idx} className="synoptic-item text-center space-y-2">
+                  <div key={idx} className="synoptic-item text-left space-y-1.5">
                     <div className="text-[11px] font-mono-num text-neutral-400">
                       {idx === 0 ? "Today" : day.date.slice(5)}
                     </div>
-                    <div className="flex justify-center text-current">
+                    <div className="flex justify-start text-current">
                       <WeatherIcon name={day.icon} className="w-5 h-5" />
                     </div>
                     <div className="text-xs font-mono-num text-current">
@@ -921,9 +919,9 @@ function App() {
               <p className="text-xs text-neutral-400 mt-1">ICAR / IMD Agromet Protocol · Micro-climate based crop protection</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-2 text-left">
               <div className="space-y-2 hover-lift">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
                   <span className="section-label">Spraying Feasibility</span>
                   <span className="status-tag active font-mono-num text-[11px]">{agriAdvisory.spraying_advisory.status}</span>
                 </div>
@@ -936,7 +934,7 @@ function App() {
               </div>
 
               <div className="space-y-2 hover-lift">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
                   <span className="section-label">Field Irrigation</span>
                   <span className="status-tag active font-mono-num text-[11px]">{agriAdvisory.irrigation_advisory.needed ? 'REQUIRED' : 'WITHHOLD'}</span>
                 </div>
@@ -949,7 +947,7 @@ function App() {
               </div>
 
               <div className="space-y-2 hover-lift">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
                   <span className="section-label">Disease / Pest Risk</span>
                   <span className="status-tag font-mono-num text-[11px]">{agriAdvisory.disease_pest_risk.level}</span>
                 </div>
@@ -962,7 +960,7 @@ function App() {
               </div>
             </div>
 
-            <div className="py-3 text-xs leading-relaxed">
+            <div className="py-3 text-xs leading-relaxed text-left">
               <span className="section-label mr-2">Crop Calendar Directive:</span>
               <span className="text-neutral-700 dark:text-neutral-300">{agriAdvisory.crop_calendar_notes}</span>
             </div>
@@ -971,16 +969,16 @@ function App() {
 
         {/* TAB 3: MARINE & COAST */}
         {activeTab === "marine" && marineData && (
-          <div className="space-y-8">
+          <div className="space-y-8 text-left">
             <div className="pb-2">
               <h2 className="text-xl font-semibold tracking-tight">Matsya Mitra — Coastal Marine Safety</h2>
               <p className="text-xs text-neutral-400 mt-1">INCOIS Standard · Sea state, wave dynamics & vessel safety</p>
             </div>
 
             {!marineData.is_marine_available ? (
-              <div className="py-8 text-center text-xs text-neutral-500">
+              <div className="py-6 text-left text-xs text-neutral-500 space-y-2">
                 <p>{marineData.reason}</p>
-                <p className="mt-2 font-mono-num">
+                <p className="font-mono-num">
                   Select coastal station:{" "}
                   <button onClick={() => setSelectedCity({ name: "Visakhapatnam, Andhra Pradesh", lat: 17.6868, lon: 83.2185 })} className="underline hover:text-current cursor-pointer">Visakhapatnam</button> |{" "}
                   <button onClick={() => setSelectedCity({ name: "Chennai, Tamil Nadu", lat: 13.0827, lon: 80.2707 })} className="underline hover:text-current cursor-pointer">Chennai</button> |{" "}
@@ -989,7 +987,7 @@ function App() {
               </div>
             ) : (
               <div className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-3 text-left">
                   <div className="hover-lift">
                     <div className="section-label">Significant Wave Height</div>
                     <div className="text-6xl font-extralight font-mono-num text-current mt-2">
@@ -1015,7 +1013,7 @@ function App() {
                   </div>
                 </div>
 
-                <div className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                <div className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed text-left">
                   <span className="section-label mr-2">Fishermen Directive:</span>
                   Small craft and motorized vessels should monitor swell changes and keep marine VHF radio active.
                 </div>
@@ -1026,7 +1024,7 @@ function App() {
 
         {/* TAB 4: SURAKSHA ALERTS */}
         {activeTab === "disaster" && (
-          <div className="space-y-8">
+          <div className="space-y-8 text-left">
             <div className="pb-2">
               <h2 className="text-xl font-semibold tracking-tight">Suraksha — IMD Early Warnings & NDRF Response</h2>
               <p className="text-xs text-neutral-400 mt-1">NDMA Protocols · Color-coded extreme weather notifications</p>
@@ -1036,7 +1034,7 @@ function App() {
             <div className="space-y-4">
               <div className="section-label">Active Warnings: {selectedCity.name}</div>
               {alerts.map((al, idx) => (
-                <div key={idx} className="py-2.5 space-y-1 text-xs hover-lift">
+                <div key={idx} className="py-2.5 space-y-1 text-xs hover-lift text-left">
                   <div className="flex items-center space-x-2">
                     <span className="status-tag active font-mono-num text-[10px]">{al.severity}</span>
                     <span className="font-semibold">{al.hazard}</span>
@@ -1049,9 +1047,9 @@ function App() {
             </div>
 
             {/* Emergency Helplines */}
-            <div className="pt-4">
+            <div className="pt-4 text-left">
               <div className="section-label mb-3">Emergency Helplines (24x7)</div>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 py-3">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 py-3 text-left">
                 {[
                   { label: "NDRF", num: "1078" },
                   { label: "State Disaster", num: "1070" },
@@ -1067,7 +1065,7 @@ function App() {
                         showToast(`Copied ${h.label} (${h.num})`);
                       }
                     }}
-                    className="helpline-item"
+                    className="helpline-item text-left"
                     title="Click to copy helpline"
                   >
                     <div className="section-label">{h.label}</div>
@@ -1078,12 +1076,12 @@ function App() {
             </div>
 
             {/* National Bulletins */}
-            <div>
+            <div className="text-left">
               <div className="section-label mb-3">National IMD Meteorological Bulletins</div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-left">
                 {nationalAlerts.map((b, idx) => (
-                  <div key={idx} className="py-2 text-xs hover-lift">
-                    <div className="flex items-center justify-between mb-0.5">
+                  <div key={idx} className="py-2 text-xs hover-lift text-left">
+                    <div className="flex items-center space-x-3 mb-0.5">
                       <span className="font-medium">{b.subdivision}</span>
                       <span className="status-tag font-mono-num text-[10px]">{b.severity}</span>
                     </div>
@@ -1097,14 +1095,14 @@ function App() {
 
         {/* TAB 5: CLIMATE OBSERVATORY */}
         {activeTab === "climate" && climateTrends && (
-          <div className="space-y-8">
+          <div className="space-y-8 text-left">
             <div className="pb-2">
               <h2 className="text-xl font-semibold tracking-tight">Climate Observatory: 45-Year Historical Analysis</h2>
               <p className="text-xs text-neutral-400 mt-1">ERA5 Baseline · Decadal temperature anomalies (1980 - 2025)</p>
             </div>
 
             {/* Indicators */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 py-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 py-3 text-left">
               <div className="hover-lift">
                 <div className="section-label">Net Decadal Warming</div>
                 <div className="text-5xl font-extralight font-mono-num text-current mt-1">{climateTrends.net_warming}</div>
@@ -1123,17 +1121,17 @@ function App() {
             </div>
 
             {/* Chart directly on #fafafa (No box) */}
-            <div className="py-2">
+            <div className="py-2 text-left">
               <div className="section-label mb-4">Historical Temperature & Precipitation Curve</div>
               <canvas id="climateDecadalChart" height="90"></canvas>
             </div>
 
             {/* Extreme Heat Days */}
-            <div className="pt-3">
+            <div className="pt-3 text-left">
               <div className="section-label mb-3">Extreme Heat Days (Temp &gt; 40°C) per Decade</div>
-              <div className="grid grid-cols-5 gap-4 text-center text-xs font-mono-num py-2">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-left text-xs font-mono-num py-2">
                 {climateTrends.heatwave_frequency?.map((h, i) => (
-                  <div key={i} className="hover-lift">
+                  <div key={i} className="hover-lift text-left">
                     <div className="text-neutral-400 text-[11px]">{h.decade}</div>
                     <div className="text-xl font-light text-current mt-0.5">{h.avg_days} <span className="text-[10px] text-neutral-400">days</span></div>
                   </div>
@@ -1141,7 +1139,7 @@ function App() {
               </div>
             </div>
 
-            <div className="py-3 text-xs text-neutral-600 dark:text-neutral-400">
+            <div className="py-3 text-xs text-neutral-600 dark:text-neutral-400 text-left">
               <span className="section-label mr-2">Resilience Directive:</span>
               <span>{climateTrends.climate_resilience_advisory}</span>
             </div>
@@ -1150,8 +1148,8 @@ function App() {
 
         {/* TAB 6: RADAR & MAP */}
         {activeTab === "map" && (
-          <div className="space-y-6">
-            <div className="pb-2 flex justify-between items-baseline">
+          <div className="space-y-6 text-left">
+            <div className="pb-2 flex flex-wrap items-baseline gap-4">
               <div>
                 <h2 className="text-xl font-semibold tracking-tight">Doppler Weather Radar & Cartography</h2>
                 <p className="text-xs text-neutral-400 mt-1">Theme-synchronized cartography with active IMD sweeps</p>
@@ -1163,8 +1161,8 @@ function App() {
         )}
 
         {/* CONVERSATIONAL AI & VOICE INTERFACE (Flat Editorial, Directly on #fafafa, Borderless) */}
-        <section className="pt-8 space-y-5">
-          <div className="flex items-center justify-between">
+        <section className="pt-8 space-y-5 text-left">
+          <div className="flex items-center space-x-3">
             <h2 className="section-label">Meteorological Conversational Intelligence</h2>
             {isPlayingAudio && (
               <span className="status-tag active font-mono-num text-[10px]">PLAYING AUDIO</span>
@@ -1375,8 +1373,8 @@ function App() {
 
           </div>
 
-          {/* Bottom Clean Bar (Borderless) */}
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-neutral-400 font-mono-num text-[11px]">
+          {/* Bottom Clean Bar (Borderless, Left-Aligned) */}
+          <div className="pt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-neutral-400 font-mono-num text-[11px] text-left">
             <div>
               <span>© 2026 WeatherOS · Form follows climate intelligence.</span>
             </div>
@@ -1526,7 +1524,7 @@ function App() {
               </div>
             </div>
 
-            <div className="mt-5 pt-2 text-center">
+            <div className="mt-5 pt-2 text-left">
               <button
                 onClick={() => setIsShortcutsOpen(false)}
                 className="aj-button-primary text-xs"
