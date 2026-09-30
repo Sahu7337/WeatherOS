@@ -25,4 +25,7 @@ class Settings:
     DEFAULT_CITY: str = "New Delhi"
     DEFAULT_STATE: str = "Delhi"
 
+    # CARTO Basemap & Tile Authentication
+    CARTO_API_KEY: str = os.getenv("CARTO_API_KEY", "cb1_44h0_1_70d499e3baa13e31b532c866")
+
 settings = Settings()
