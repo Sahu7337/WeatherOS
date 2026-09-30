@@ -85,97 +85,97 @@ function WeatherIcon({ name, className = "w-6 h-6" }) {
   }
 }
 
-// Dynamic Live Weather Favicon Generator
+// Dynamic Live Weather Favicon Generator (Strictly Monochrome B/W)
 function updateLiveWeatherFavicon(iconName, isDay) {
   const link = document.getElementById("dynamic-favicon");
   if (!link) return;
 
+  const styleTag = `<style>.bw-s{stroke:#111;}.bw-f{fill:#111;}@media(prefers-color-scheme:dark){.bw-s{stroke:#fff;}.bw-f{fill:#fff;}}</style>`;
   let innerSvg = "";
 
   if (isDay === false && (iconName === "Sun" || iconName === "SunDim" || !iconName)) {
-    // Elegant warm crescent moon
-    innerSvg = `<path d="M38 14a18 18 0 1 0 12 32 16 16 0 0 1-12-32z" fill="#f59e0b" />`;
+    // Pure B/W crescent moon
+    innerSvg = `<path d="M38 14a18 18 0 1 0 12 32 16 16 0 0 1-12-32z" class="bw-f" />`;
   } else {
     switch (iconName) {
       case "Sun":
-        // Crisp, vibrant golden sun with 8 perfectly balanced radial beams
+        // Pure B/W sun with balanced radial rays
         innerSvg = `
-          <circle cx="32" cy="32" r="14" fill="#f59e0b" />
-          <line x1="32" y1="5" x2="32" y2="13" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
-          <line x1="32" y1="51" x2="32" y2="59" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
-          <line x1="5" y1="32" x2="13" y2="32" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
-          <line x1="51" y1="32" x2="59" y2="32" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
-          <line x1="13" y1="13" x2="19" y2="19" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
-          <line x1="51" y1="13" x2="45" y2="19" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
-          <line x1="13" y1="51" x2="19" y2="45" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
-          <line x1="51" y1="51" x2="45" y2="45" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
+          <circle cx="32" cy="32" r="12" class="bw-f" />
+          <line x1="32" y1="6" x2="32" y2="15" class="bw-s" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="32" y1="49" x2="32" y2="58" class="bw-s" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="6" y1="32" x2="15" y2="32" class="bw-s" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="49" y1="32" x2="58" y2="32" class="bw-s" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="14" y1="14" x2="20" y2="20" class="bw-s" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="50" y1="14" x2="44" y2="20" class="bw-s" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="14" y1="50" x2="20" y2="44" class="bw-s" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="50" y1="50" x2="44" y2="44" class="bw-s" stroke-width="4.5" stroke-linecap="round" />
         `;
         break;
 
       case "SunDim":
       case "CloudSun":
-        // Sun peeking above cloud
+        // Pure B/W sun peeking above cloud
         innerSvg = `
-          <circle cx="24" cy="22" r="10" fill="#f59e0b" />
-          <line x1="24" y1="6" x2="24" y2="10" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="12" y1="12" x2="15" y2="15" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="8" y1="22" x2="12" y2="22" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="36" y1="12" x2="33" y2="15" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
-          <path d="M20 46h24a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 20 46z" fill="#94a3b8" />
+          <circle cx="24" cy="22" r="9" class="bw-s" stroke-width="3" fill="none" />
+          <line x1="24" y1="7" x2="24" y2="11" class="bw-s" stroke-width="3" stroke-linecap="round" />
+          <line x1="13" y1="13" x2="16" y2="16" class="bw-s" stroke-width="3" stroke-linecap="round" />
+          <line x1="9" y1="22" x2="13" y2="22" class="bw-s" stroke-width="3" stroke-linecap="round" />
+          <path d="M20 46h24a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 20 46z" class="bw-f" />
         `;
         break;
 
       case "CloudRain":
       case "CloudRainWind":
       case "CloudDrizzle":
-        // Soft cloud with sky blue rain
+        // Pure B/W cloud with rain lines
         innerSvg = `
-          <path d="M18 36h28a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 18 36z" fill="#64748b" />
-          <line x1="21" y1="44" x2="18" y2="52" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="32" y1="44" x2="29" y2="52" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="43" y1="44" x2="40" y2="52" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" />
+          <path d="M18 36h28a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 18 36z" class="bw-f" />
+          <line x1="21" y1="44" x2="18" y2="52" class="bw-s" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="32" y1="44" x2="29" y2="52" class="bw-s" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="43" y1="44" x2="40" y2="52" class="bw-s" stroke-width="3.5" stroke-linecap="round" />
         `;
         break;
 
       case "CloudLightning":
-        // Storm cloud with golden lightning
+        // Pure B/W storm cloud with lightning
         innerSvg = `
-          <path d="M18 34h28a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 18 34z" fill="#475569" />
-          <polygon points="34,31 26,44 33,44 29,56 42,41 34,41" fill="#f59e0b" />
+          <path d="M18 34h28a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 18 34z" class="bw-s" stroke-width="3" fill="none" />
+          <polygon points="34,31 26,44 33,44 29,56 42,41 34,41" class="bw-f" />
         `;
         break;
 
       case "Snowflake":
-        // Hexagonal ice crystal
+        // Pure B/W snowflake
         innerSvg = `
-          <line x1="32" y1="8" x2="32" y2="56" stroke="#06b6d4" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="11" y1="20" x2="53" y2="44" stroke="#06b6d4" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="11" y1="44" x2="53" y2="20" stroke="#06b6d4" stroke-width="3.5" stroke-linecap="round" />
-          <circle cx="32" cy="32" r="4" fill="#06b6d4" />
+          <line x1="32" y1="8" x2="32" y2="56" class="bw-s" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="11" y1="20" x2="53" y2="44" class="bw-s" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="11" y1="44" x2="53" y2="20" class="bw-s" stroke-width="3.5" stroke-linecap="round" />
+          <circle cx="32" cy="32" r="4" class="bw-f" />
         `;
         break;
 
       case "CloudFog":
-        // Cloud with mist strata
+        // Pure B/W cloud with mist strata
         innerSvg = `
-          <path d="M19 32h24a9 9 0 0 0 1-17.9 13 13 0 0 0-25 4.9A9 9 0 0 0 19 32z" fill="#94a3b8" />
-          <line x1="14" y1="42" x2="50" y2="42" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="18" y1="48" x2="46" y2="48" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="22" y1="54" x2="42" y2="54" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round" />
+          <path d="M19 32h24a9 9 0 0 0 1-17.9 13 13 0 0 0-25 4.9A9 9 0 0 0 19 32z" class="bw-f" />
+          <line x1="14" y1="42" x2="50" y2="42" class="bw-s" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="18" y1="48" x2="46" y2="48" class="bw-s" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="22" y1="54" x2="42" y2="54" class="bw-s" stroke-width="3.5" stroke-linecap="round" />
         `;
         break;
 
       case "Cloud":
       default:
-        // Clean neutral cloud contour
+        // Pure B/W cloud contour
         innerSvg = `
-          <path d="M18 44h28a11 11 0 0 0 1-21.9 15 15 0 0 0-28 5.9A11 11 0 0 0 18 44z" fill="#94a3b8" />
+          <path d="M18 44h28a11 11 0 0 0 1-21.9 15 15 0 0 0-28 5.9A11 11 0 0 0 18 44z" class="bw-f" />
         `;
         break;
     }
   }
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">${innerSvg}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">${styleTag}${innerSvg}</svg>`;
   link.href = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
