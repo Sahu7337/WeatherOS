@@ -90,62 +90,92 @@ function updateLiveWeatherFavicon(iconName, isDay) {
   const link = document.getElementById("dynamic-favicon");
   if (!link) return;
 
-  const styleTag = `<style>.stroke-c{stroke:#111;}.fill-c{fill:#111;}@media(prefers-color-scheme:dark){.stroke-c{stroke:#fff;}.fill-c{fill:#fff;}}</style>`;
   let innerSvg = "";
 
   if (isDay === false && (iconName === "Sun" || iconName === "SunDim" || !iconName)) {
-    innerSvg = `<path d="M38 16a18 18 0 1 0 10 32 16 16 0 0 1-10-32z" class="fill-c" />`;
+    // Elegant warm crescent moon
+    innerSvg = `<path d="M38 14a18 18 0 1 0 12 32 16 16 0 0 1-12-32z" fill="#f59e0b" />`;
   } else {
     switch (iconName) {
       case "Sun":
+        // Crisp, vibrant golden sun with 8 perfectly balanced radial beams
         innerSvg = `
-          <circle cx="32" cy="32" r="11" class="fill-c" />
-          <path d="M32 6v6m0 40v6M6 32h6m40 0h6m-36.8-18.4l4.2 4.2m25.2 25.2l4.2 4.2m-33.6 0l4.2-4.2m25.2-25.2l4.2-4.2" class="stroke-c" stroke-width="3.5" stroke-linecap="round" fill="none" />
+          <circle cx="32" cy="32" r="14" fill="#f59e0b" />
+          <line x1="32" y1="5" x2="32" y2="13" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="32" y1="51" x2="32" y2="59" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="5" y1="32" x2="13" y2="32" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="51" y1="32" x2="59" y2="32" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="13" y1="13" x2="19" y2="19" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="51" y1="13" x2="45" y2="19" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="13" y1="51" x2="19" y2="45" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
+          <line x1="51" y1="51" x2="45" y2="45" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
         `;
         break;
+
       case "SunDim":
       case "CloudSun":
+        // Sun peeking above cloud
         innerSvg = `
-          <circle cx="26" cy="24" r="8" class="stroke-c" stroke-width="3" fill="none" />
-          <path d="M26 10v4M12 24h4m19.9-9.9l-2.8 2.8" class="stroke-c" stroke-width="3" stroke-linecap="round" fill="none" />
-          <path d="M19 46h24a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 19 46z" class="fill-c stroke-c" stroke-width="2" />
+          <circle cx="24" cy="22" r="10" fill="#f59e0b" />
+          <line x1="24" y1="6" x2="24" y2="10" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="12" y1="12" x2="15" y2="15" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="8" y1="22" x2="12" y2="22" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="36" y1="12" x2="33" y2="15" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" />
+          <path d="M20 46h24a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 20 46z" fill="#94a3b8" />
         `;
         break;
+
       case "CloudRain":
       case "CloudRainWind":
       case "CloudDrizzle":
+        // Soft cloud with sky blue rain
         innerSvg = `
-          <path d="M19 38h24a9 9 0 0 0 1-17.9 13 13 0 0 0-25 4.9A9 9 0 0 0 19 38z" class="fill-c" />
-          <path d="M22 45l-3 7m11-7l-3 7m11-7l-3 7" class="stroke-c" stroke-width="3.5" stroke-linecap="round" fill="none" />
+          <path d="M18 36h28a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 18 36z" fill="#64748b" />
+          <line x1="21" y1="44" x2="18" y2="52" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="32" y1="44" x2="29" y2="52" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="43" y1="44" x2="40" y2="52" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" />
         `;
         break;
+
       case "CloudLightning":
+        // Storm cloud with golden lightning
         innerSvg = `
-          <path d="M18 36h26a9 9 0 0 0 1-17.9 13 13 0 0 0-26 4.9A9 9 0 0 0 18 36z" class="stroke-c" stroke-width="3" fill="none" />
-          <path d="M34 33l-7 11h7l-3 10 11-13h-7l4-8z" class="fill-c" />
+          <path d="M18 34h28a10 10 0 0 0 1-19.9 14 14 0 0 0-26 5A10 10 0 0 0 18 34z" fill="#475569" />
+          <polygon points="34,31 26,44 33,44 29,56 42,41 34,41" fill="#f59e0b" />
         `;
         break;
+
       case "Snowflake":
+        // Hexagonal ice crystal
         innerSvg = `
-          <path d="M32 10v44M11 21l42 22M11 43l42-22m-27-27l6 6m0 0l6-6m-12 44l6-6m0 0l6 6" class="stroke-c" stroke-width="3.5" stroke-linecap="round" fill="none" />
+          <line x1="32" y1="8" x2="32" y2="56" stroke="#06b6d4" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="11" y1="20" x2="53" y2="44" stroke="#06b6d4" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="11" y1="44" x2="53" y2="20" stroke="#06b6d4" stroke-width="3.5" stroke-linecap="round" />
+          <circle cx="32" cy="32" r="4" fill="#06b6d4" />
         `;
         break;
+
       case "CloudFog":
+        // Cloud with mist strata
         innerSvg = `
-          <path d="M19 34h24a9 9 0 0 0 1-17.9 13 13 0 0 0-25 4.9A9 9 0 0 0 19 34z" class="stroke-c" stroke-width="3" fill="none" />
-          <path d="M14 42h36M18 48h28M22 54h20" class="stroke-c" stroke-width="3" stroke-linecap="round" fill="none" />
+          <path d="M19 32h24a9 9 0 0 0 1-17.9 13 13 0 0 0-25 4.9A9 9 0 0 0 19 32z" fill="#94a3b8" />
+          <line x1="14" y1="42" x2="50" y2="42" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="18" y1="48" x2="46" y2="48" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="22" y1="54" x2="42" y2="54" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round" />
         `;
         break;
+
       case "Cloud":
       default:
+        // Clean neutral cloud contour
         innerSvg = `
-          <path d="M19 44h26a11 11 0 0 0 1-21.9 15 15 0 0 0-28 5.9A11 11 0 0 0 19 44z" class="fill-c stroke-c" stroke-width="2.5" />
+          <path d="M18 44h28a11 11 0 0 0 1-21.9 15 15 0 0 0-28 5.9A11 11 0 0 0 18 44z" fill="#94a3b8" />
         `;
         break;
     }
   }
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">${styleTag}${innerSvg}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">${innerSvg}</svg>`;
   link.href = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
