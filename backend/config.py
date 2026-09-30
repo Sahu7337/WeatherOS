@@ -5,19 +5,18 @@ class Settings:
     API_V1_STR: str = "/api"
     DEBUG: bool = True
     
-    # Supported Indian Languages
+    # Supported Regional & National Languages
     SUPPORTED_LANGUAGES = {
         "en": {"name": "English", "native": "English", "voice": "en-IN-NeerjaNeural"},
-        "hi": {"name": "Hindi", "native": "हिंदी", "voice": "hi-IN-SwaraNeural"},
+        "or": {"name": "Odia", "native": "ଓଡ଼ିଆ", "voice": "en-IN-NeerjaNeural"},
+        "bn": {"name": "Bengali", "native": "বাংলা", "voice": "bn-IN-TanishaaNeural"},
         "ta": {"name": "Tamil", "native": "தமிழ்", "voice": "ta-IN-PallaviNeural"},
         "te": {"name": "Telugu", "native": "తెలుగు", "voice": "te-IN-MohanNeural"},
-        "bn": {"name": "Bengali", "native": "বাংলা", "voice": "bn-IN-TanishaaNeural"},
         "mr": {"name": "Marathi", "native": "मराठी", "voice": "mr-IN-AarohiNeural"},
         "gu": {"name": "Gujarati", "native": "ગુજરાતી", "voice": "gu-IN-DhwaniNeural"},
         "kn": {"name": "Kannada", "native": "ಕನ್ನಡ", "voice": "kn-IN-SapnaNeural"},
-        "or": {"name": "Odia", "native": "ଓଡ଼ିଆ", "voice": "hi-IN-SwaraNeural"}, # fallback to hi voice
-        "pa": {"name": "Punjabi", "native": "ਪੰਜਾਬੀ", "voice": "hi-IN-SwaraNeural"},
-        "ml": {"name": "Malayalam", "native": "മലയാളം", "voice": "ml-IN-SobhanaNeural"}
+        "ml": {"name": "Malayalam", "native": "മലയാളം", "voice": "ml-IN-SobhanaNeural"},
+        "pa": {"name": "Punjabi", "native": "ਪੰਜਾਬੀ", "voice": "en-IN-NeerjaNeural"}
     }
 
     # Default location (New Delhi, India)
