@@ -28,6 +28,15 @@ const QUICK_STATIONS = [
   { name: "Bhubaneswar, Odisha", lat: 20.2961, lon: 85.8245, region: "East" }
 ];
 
+// CARTO Basemap Authentication & Tile Provider
+const CARTO_API_KEY = "cb1_44h0_1_70d499e3baa13e31b532c866";
+
+function getCartoTileUrl(theme, apiKey = CARTO_API_KEY) {
+  const style = theme === "dark" ? "dark_all" : "light_all";
+  const keyParam = apiKey ? `?api_key=${apiKey}` : "";
+  return `https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png${keyParam}`;
+}
+
 // Toast notification
 function showToast(message) {
   let toast = document.getElementById("aj-toast");
@@ -377,15 +386,21 @@ function App() {
         const container = document.getElementById("weather-map");
         if (container && !mapRef.current) {
           const map = L.map("weather-map").setView([selectedCity.lat, selectedCity.lon], 6);
-          const tileUrl = theme === "dark"
-            ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+          const tileUrl = getCartoTileUrl(theme);
 
           const tileLayer = L.tileLayer(tileUrl, {
             attribution: "© OpenStreetMap © CARTO",
             subdomains: "abcd",
             maxZoom: 19
           }).addTo(map);
+
+          tileLayer.on("tileerror", () => {
+            // Graceful fallback if authenticated request is restricted or offline
+            const fallbackUrl = theme === "dark"
+              ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+            tileLayer.setUrl(fallbackUrl);
+          });
 
           mapTileLayerRef.current = tileLayer;
 
@@ -417,9 +432,7 @@ function App() {
           mapRef.current.setView([selectedCity.lat, selectedCity.lon], 6);
 
           if (mapTileLayerRef.current) {
-            const newTileUrl = theme === "dark"
-              ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-              : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+            const newTileUrl = getCartoTileUrl(theme);
             mapTileLayerRef.current.setUrl(newTileUrl);
           }
         }
