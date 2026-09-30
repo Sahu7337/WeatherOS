@@ -635,8 +635,8 @@ function App() {
     <div className="min-h-screen flex flex-col font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
       
       {/* 1. MINIMALIST EDITORIAL HEADER (Strictly on #fafafa ground) */}
-      <header className="px-4 sm:px-8 py-5">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+      <header className="w-full">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-5 flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
           
           {/* Logo & Operational Status */}
           <div className="flex items-baseline space-x-3 cursor-pointer shrink-0" onClick={() => setActiveTab("overview")}>
@@ -739,8 +739,8 @@ function App() {
       </header>
 
       {/* 2. TELEMETRY STATUS LINE (Left-aligned) */}
-      <section className="px-4 sm:px-8 py-2 text-xs">
-        <div className="max-w-5xl mx-auto flex flex-wrap items-center gap-4 text-neutral-500">
+      <section className="w-full text-xs">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-2 flex flex-wrap items-center gap-4 text-neutral-500">
           <div className="flex items-center space-x-2">
             <span className="section-label">STATION:</span>
             <span className="text-current font-medium">{selectedCity.name}</span>
@@ -757,7 +757,8 @@ function App() {
       </section>
 
       {/* 3. MAIN EDITORIAL CONTENT (No Cards, Pure #fafafa Ground) */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-8 py-8 flex-1 w-full space-y-12">
+      <main className="w-full flex-1">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8 space-y-12">
 
         {/* DOMAIN NAVIGATION (Clean Flat Links with Hairline Indicator) */}
         <nav className="tab-nav-bar" aria-label="Navigation Tabs">
@@ -1292,11 +1293,12 @@ function App() {
           </div>
         </section>
 
+        </div>
       </main>
 
       {/* 4. PROPER EDITORIAL FOOTER PAGE (Borderless) */}
-      <footer className="pt-12 pb-16 px-4 sm:px-8 mt-12 text-xs">
-        <div className="max-w-5xl mx-auto space-y-12">
+      <footer className="w-full mt-12 text-xs">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-12 pb-16 space-y-12">
           
           {/* 4 Multi-Column Information Sections */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
